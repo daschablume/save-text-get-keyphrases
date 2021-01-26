@@ -1,0 +1,26 @@
+<html>
+    <head>
+      {% if title %}
+      <title>{{ title }}</title> 
+      {% else %}
+      <title>Вітання! Завантажте текст</title>
+      {% endif %}
+    </head>
+    <body>
+    	<div>
+            <a href="{{ url_for('upload_text') }}">Завантажити текст</a>
+            <a href="{{ url_for('top_keyphrases') }}">Топ ключових фраз</a>
+        </div>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </body>
+</html>
+

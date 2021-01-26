@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Топ ключових фраз з усіх текстів наразі виглядає так:</h1>
+    {% for phrase in top_phrases %}
+        <p>
+             {{loop.index}}. {{ phrase }} 
+        </p>    
+    {% endfor %}
+{% endblock %}

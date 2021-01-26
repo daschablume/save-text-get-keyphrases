@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Привіт! Збережи текст і виокреми його ключові слова</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.textfield.label }}<br>
+            {{ form.textfield(cols="100", rows="25")|safe }} 
+            {% for error in form.textfield.errors %}
+            <span style="color: red;">[{{ 'Будь ласка, заповніть це поле' }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+        	{{ form.titlefield.label }}<br>
+            {{ form.titlefield(size=50) }}
+            {% for error in form.titlefield.errors %}
+            <span style="color: red;">[{{ 'Будь ласка, заповніть це поле' }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}
+
