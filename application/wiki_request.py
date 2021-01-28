@@ -7,21 +7,32 @@ Created on Mon Jan 25 20:47:33 2021
 @author: macuser
 """
 
-import wikipediaapi
+import wikipedia
+import requests
 
-wiki_wiki = wikipediaapi.Wikipedia('en')
+def check_wiki(phrase): #takes an str and returns a str
+    '''
+    Search in wiki for a keyphrase and return a correspondent link.
+    If there is an url, add to the result as well as disambiguation page.
+    If there is no page with the correspondent name, return a string with
+    information about it.
+    '''
+    try:
+        page = wikipedia.page(phrase, auto_suggest=False)
+        #if auto_suggest is True, it returns wrong result
+        disambiguation_page = page.url + '_(disambiguation)'
+        if requests.get(url=disambiguation_page).status_code == 404:
+            result = page.url
+        else:
+            result = f'{page.url}.\n Також: {disambiguation_page}'
+            
+    except wikipedia.DisambiguationError:
+        result = 'https://en.wikipedia.org/wiki/' + phrase + '_(disambiguation)'
+    except wikipedia.PageError:
+        result = 'На жаль, сторінки з таким іменем не існує.'
+        
+    return result
 
-def check_wiki(keyphrases):
-    '''
-    Search in wiki for each key phrase; if there is no page with the 
-    correspondent name, return None.
-    '''
-    links = {}
-    for phrase in keyphrases:
-        page = wiki_wiki.page(phrase)
-        try:
-            links[phrase] = page.canonicalurl
-        except KeyError: #if page doesn't exist 
-            links[phrase] = None
-    return links
-    
+
+
+

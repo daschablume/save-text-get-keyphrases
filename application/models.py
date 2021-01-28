@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """This module contains models for database.
-
-Created on Fri Jan 22 15:35:56 2021
+Created on Wed Jan 27 21:25:38 2021
 
 @author: macuser
 """
@@ -20,19 +19,22 @@ class Text(db.Model):
     title = db.Column(db.String(200), index=True)
     #the title of the article can be quite long, so (200) is there
     body = db.Column(db.String())
-    keyphrases = db.relationship('KeyPhrase', backref='text', lazy='dynamic')
+    keyphrases = db.relationship('Keyphrase', backref='text', lazy='dynamic')
 
     def __repr__(self):
-        return '<Text {}>'.format(self.name)    
+        return '<Text {}>'.format(self.title)    
 
 
-class KeyPhrase(db.Model):
+class Keyphrase(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
-    text_id = db.Column(db.Integer, db.ForeignKey('text.id'))
     wiki_link = db.Column(db.String())
-
+    counter = db.Column(db.Integer)
+    text_id = db.Column(db.Integer, db.ForeignKey('text.id'))
+    
     def __repr__(self):
-        return '<KeyPhrase {}>'.format(self.body)
+        return '<Keyphrase {}>'.format(self.body)
     
-    
+    def increment_counter(self):
+        self.counter += 1
+        return self.counter

@@ -1,10 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+div.c {
+  text-transform: capitalize;
+}
+</style>
     <h1>Топ ключових фраз з усіх текстів наразі виглядає так:</h1>
     {% for phrase in top_phrases %}
         <p>
-             {{loop.index}}. {{ phrase }} 
+             <div class="c">{{loop.index}}. {{ phrase.body }}</div></p>
+             {{ phrase.wiki_link }}
         </p>    
     {% endfor %}
 {% endblock %}
